@@ -18,3 +18,17 @@ Route::get('/', function () {
 Route::auth();
 
 Route::get('/home', 'HomeController@index');
+
+
+// for Admin User controller
+Route::resource('/admin/user', 'AdminUserController');
+
+
+
+// admin
+Route::get('/admin', function(){
+    return view('layouts.admin');
+})->name('admin');
+
+//
+//Route::get('/admin/user/store','AdminUserController@store')->name('create');

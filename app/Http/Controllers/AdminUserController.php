@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserEditRequest;
 use App\Http\Requests\UserRequest;
 use App\Photo;
 use App\Role;
@@ -58,7 +59,7 @@ class AdminUserController extends Controller
            $photo->move('images', $name);
 
            //create a record in photo table
-          $photoid = Photo::create(['file' => $photo]);
+          $photoid = Photo::create(['file' => $name]);
 
           //and photo id of photo table store in user table
           $input['photo_id'] = $photoid->id;
@@ -88,8 +89,12 @@ class AdminUserController extends Controller
      */
     public function edit($id)
     {
-        //
-        return view('admin.users.edit');
+        $user = User::findorfail($id);
+
+        $rolename = $user->role;
+        $roles = Role::all()->except($rolename->id);
+
+        return view('admin/users/edit',compact('user','roles','rolename'));
     }
 
     /**
@@ -99,9 +104,38 @@ class AdminUserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserEditRequest $request, $id)
     {
-        //
+
+        $user = User::find($id);
+
+
+
+        //if password is empty set the default password
+
+        if(trim($request->password) == ''){
+            $input  = $request->except('password');
+        }
+        else{
+            $input = $request->all();
+        }
+
+
+
+        if($file = $request->file('photo_id')){
+
+            $name =time() . $file->getClientOriginalName();
+            $file->move('images',$name);
+            $photos = Photo::create(['file' => $name]);
+
+        }
+
+        $input['photo_id'] = $photos->id;
+
+        $user->update($input);
+
+        return redirect('/admin/user');
+
     }
 
     /**

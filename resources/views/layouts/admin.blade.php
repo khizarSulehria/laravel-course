@@ -56,7 +56,6 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('admin.user.index') }}">Users</a></li>
                         <li><a href="{{ route('admin.user.create') }}">User Create</a></li>
-                        <li><a href="#">User Edit</a></li>
                     </ul>
 
                 </li>

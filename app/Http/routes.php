@@ -21,7 +21,11 @@ Route::get('/home', 'HomeController@index');
 
 
 // for Admin User controller
-Route::resource('/admin/user', 'AdminUserController');
+
+Route::group(['middleware' => 'admin'] , function (){
+    Route::resource('/admin/user', 'AdminUserController');
+   Route::resource('/admin/post' , 'AdminPostsController');
+});
 
 
 
@@ -32,3 +36,8 @@ Route::get('/admin', function(){
 
 //
 //Route::get('/admin/user/store','AdminUserController@store')->name('create');
+
+
+
+//get rout list command
+//php artisan route:list

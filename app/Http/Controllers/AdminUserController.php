@@ -48,6 +48,7 @@ class AdminUserController extends Controller
 
         //take all user inputs and store in $input
        $input =  $request->all();
+       $input['password'] = bcrypt($request->password);
 
        //if user select photo file in form
        if($photo = $request->file('photo_id')){

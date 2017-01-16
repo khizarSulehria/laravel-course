@@ -65,7 +65,7 @@
 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Posts<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">Post Create</a></li>
+                        <li><a href="{{route('admin.post.create')}}">Post Create</a></li>
                         <li><a href="#">Post Edit</a></li>
                     </ul>
 
